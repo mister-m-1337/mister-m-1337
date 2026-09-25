@@ -28,7 +28,7 @@ Sobre a base determinística do chão de fábrica e data centers, integro arquit
 ### Eixos Estratégicos de Especialidade
 
 * **Segurança OT/ICS & SCADA:** Arquitetura de segmentação e zonas/conduítes orientada por **ISA/IEC 62443**, NIST CSF e Purdue Model. Hardening de camadas de controle e PLCs, análise de integridade em protocolos industriais (Modbus, DNP3) e eliminação de superfícies de ataque em linhas de produção.
-* **Validação Farmacêutica (CSV / GxP):** Ciclo completo de qualificação de infraestruturas e validação de sistemas computadorizados (QI, QO, QP) em estrita conformidade com **ANVISA (RDC 658/301), GAMP 5 e FDA 21 CFR Part 11**, conectando garantia da qualidade, engenharia e TI.
+* **Validação Farmacêutica (CSV / GxP):** Ciclo completo de qualificação de infraestruturas e validação de sistemas computadorizados (QI, QO, QP) em estrita conformidade com **ANVISA (RDC 658/2022 / RDC 301/2019), GAMP 5 e FDA 21 CFR Part 11**, conectando garantia da qualidade, engenharia e TI.
 * **DevSecOps & Resiliência em Nuvem:** Implementação de controles nativos em esteiras de entrega contínua (SAST, SCA, Secret Scanning), governança de identidades e automação de infraestrutura imutável (IaC via Terraform/Ansible) em ambientes híbridos e multi-cloud.
 * **Operações de SOC & Resposta a Incidentes:** Operação e governança de centros de defesa cibernética 24/7, mapeamento e correlação de ameaças via **MITRE ATT&CK**, redução contínua de MTTD/MTTR e reporte executivo com foco em risco de negócio.
 
@@ -257,7 +257,7 @@ flowchart LR
 ---
 
 ### 5. Hybrid Observability Platform & FinOps Architecture — Azure, Prometheus & Zero-Trust
-*Arquitetura de observabilidade híbrida para telemetria de alta densidade em nuvem (App Service Plans multitenant), mitigando custos de ingestão e eliminando taxas de transferência (egress).*
+*Arquitetura de observabilidade híbrida para telemetria de alta densidade em nuvem (App Service Plans multitenant), mitigando custos de ingestão e otimizando volume de transferência de saída.*
 
 * **Estratégia FinOps & Otimização de Tráfego:** Eliminação de faturas exponenciais de ingestão/retenção no Azure Monitor / Log Analytics através de coleta desacoplada para armazenamento próprio. Tráfego encapsulado via túnel Zero-Trust (NetBird/WireGuard), neutralizando *egress fees* públicas e sobrecarga de agentes na nuvem.
 * **Diagnóstico de Confiabilidade & Migração Arquitetural (Push vs. Pull):** Descontinuação de modelo frágil baseado em scripts Bash/Cron e InfluxDB (que gerava falsos positivos e métricas congeladas por `last()` em caso de falha de coleta). Migração para o padrão de mercado **Prometheus (Pull Pattern)**, garantindo detecção instantânea de alvos inoperantes (estado `DOWN`).
@@ -407,7 +407,48 @@ flowchart TD
 
 ---
 
-### 10. Local LLMOps & Autonomous Cyber Assistant Platform — Unsloth, Ollama & pfSense
+### 10. Industrial Embedded Smart Gateway — Buildroot, OT/ICS Hardening & Galvanic Isolation
+*Concepção e implementação de appliance embarcado sob medida para blindagem e criptografia de barramentos seriais industriais em maquinário crítico de manufatura regulada.*
+
+* **Engenharia de Firmware Imutável (Buildroot Linux):** Compilação de sistema operacional embarcado minimalista (footprint de 30 MB) sobre arquitetura ARM Cortex-A53 (Allwinner H618). Sistema de arquivos montado integralmente em memória RAM e partição somente-leitura (**SquashFS**), garantindo tempo de inicialização determinístico (sub-4s) e imunidade absoluta contra corrupção em desligamento abrupto de energia.
+* **Isolamento Físico & Tratamento de Telegramas Industriais:** Transceptor serial RS232 com isolamento galvânico (óptico/magnético) para supressão de ruídos induzidos e surtos de tensão de painel elétrico. Daemon especializado (`ser2net`) configurado com controle estrito de *inter-frame timeout*, evitando a fragmentação de frames do protocolo de controle industrial.
+* **Criptografia P2P & Microsegmentação (WireGuard + nftables):** Substituição de conversores comerciais vulneráveis por canal cifrado ponto a ponto (**ChaCha20-Poly1305**) interligando o CLP ao IHM supervisório. Regras locais em `nftables` sob política estrita *Default-Drop*, restringindo a porta serial em rede exclusivamente ao IP virtual interno do túnel.
+* **IHM Local em E-Paper & Governança Operacional:** Integração de display E-Ink/E-Paper via barramento SPI para telemetria passiva de link e integridade do túnel sem degradação do estado visual em corte de alimentação. Rotina autônoma de diagnóstico e auditoria ativada por dispositivo USB assinado via `mdev`.
+
+```mermaid
+flowchart LR
+    subgraph Campo_Industrial ["Chão de Fábrica / Painel Elétrico"]
+        PLC["CLP Industrial (Omron)"]
+        Serial_ISO["Isolador Galvânico RS232 (TTL/RS232)"]
+        PLC -->|Cabo Serial Blindado| Serial_ISO
+    end
+
+    subgraph Smart_Gateway ["Smart Gateway Embarcado (Buildroot / ARM)"]
+        UART["UART SoC (Allwinner H618)"]
+        Squash["RootFS Imutável (SquashFS / RAM)"]
+        Daemon["ser2net (Framing Determinístico)"]
+        WG_Gate["Túnel Cifrado WireGuard"]
+        Firewall["nftables (Default-Drop Policy)"]
+        EPaper["Display Local E-Paper (SPI)"]
+
+        Serial_ISO --> UART
+        UART --> Daemon
+        Daemon --> Firewall
+        Firewall --> WG_Gate
+        Squash -.->|Boot Read-Only| Daemon
+        Daemon -.->|Telemetria| EPaper
+    end
+
+    subgraph IHM_Supervisorio ["Supervisão & Operação (Windows)"]
+        WG_Client["WireGuard Service (Autônomo)"]
+        VSP["Driver Virtual COM Port"]
+        SCADA["Software SCADA / Runtime"]
+
+        WG_Gate ==>|RJ45 Blindado / ChaCha20| WG_Client
+        WG_Client --> VSP
+        VSP --> SCADA
+    end
+### 11. Local LLMOps & Autonomous Cyber Assistant Platform — Unsloth, Ollama & pfSense
 *Engenharia de modelos locais de inteligência artificial, alinhamento supervisionado para operações Purple Team e integração de agentes autônomos de terminal sob restrições severas de computação.*
 
 * **Alinhamento e Quantização sob Limite de VRAM:** Otimização de pipelines de fine-tuning com **Unsloth** em GPU de consumo restrito (6 GB VRAM), realizando quantização 4-bit (`Q4_K_M`) e governança de contexto (`num_ctx: 4096`). Padronização de saídas no formato **ChatML** com enforcement de matriz quadrivalente determinística (*Análise, Exploração Red Team, Detecção Blue Team e Mitigação*).
