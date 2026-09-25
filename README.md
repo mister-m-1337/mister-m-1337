@@ -419,11 +419,18 @@ flowchart TD
 
 ---
 
-## 🎤 Liderança Técnica & Palestras
+## 🎤 Liderança Técnica & Produção de Conhecimento
+
+* **Palestra / Keynote: "A Colisão de Mundos: Por Que o DevSecOps Tradicional Falha em Redes Industriais (OT/ICS)"**  
+  *Estruturada para conferências de tecnologia e comunidades de engenharia (DevFest, BSides)*  
+  Discussão aprofundada sobre a fricção entre práticas corporativas de TI ágil e a realidade operacional de chão de fábrica e plantas críticas.  
+  * **O Abismo de Paradigmas:** Contraste da tríade de segurança tradicional (CIA) contra a primazia de segurança física e continuidade operacional (AIC / Safety). Análise de incidentes operacionais reais provocados por abordagens cegas de TI (ex.: varreduras de portas e testes automatizados causando falhas em PLCs).  
+  * **A Ilusão do Air-Gap na Indústria 4.0:** Vetores contemporâneos de quebra de isolamento físico decorrentes de convergência com nuvem, telemetria remota e manutenção de terceiros.  
+  * **Zero Trust & DevSecOps Aplicados a OT:** Implementação de microsegmentação fundamentada no Modelo Purdue (ISA/IEC 62443), telemetria estritamente passiva via Deep Packet Inspection (DPI) e pipelines com validação prévia em réplicas digitais (*Digital Twins*) sem impacto na planta ativa.
 
 * **Palestra: "FinOps: Quando seu Pipeline Deploya Dinheiro, Não Só Código"**  
   *Conferência PorteraTech / Hub Goiás*  
-  Discussão executiva sobre o impacto financeiro de decisões técnicas em pipelines de entrega contínua. Métodos para introduzir governança de custos em arquiteturas de nuvem (*Policy-as-Code* e alocação via IaC) sem comprometer resiliência, tolerância a falhas ou segurança operacional.
+  Discussão executiva sobre o impacto financeiro de decisões técnicas em esteiras de entrega contínua. Métodos para introduzir governança de custos em arquiteturas de nuvem (*Policy-as-Code* e alocação via IaC) sem comprometer resiliência, tolerância a falhas ou segurança operacional.
 
 ---
 
