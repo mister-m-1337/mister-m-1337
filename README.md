@@ -5,6 +5,7 @@
 
 *Engenharia de infraestrutura, automação de esteiras seguras e garantia de disponibilidade determinística para ambientes de missão crítica.*
 
+[![GitHub](https://img.shields.io/badge/GitHub-mister--m--1337-24292e?style=for-the-badge&logo=github&logoColor=white)](https://github.com/mister-m-1337)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/michael-mendes-ot-security)
 [![Email](https://img.shields.io/badge/Email-michaelmmendonca%40gmail.com-24292e?style=for-the-badge&logo=maildotru&logoColor=white)](mailto:michaelmmendonca@gmail.com)
 [![Localização](https://img.shields.io/badge/Localiza%C3%A7%C3%A3o-An%C3%A1polis%2FGO%20%C2%B7%20Remoto%20Global-24292e?style=for-the-badge&logo=googlemaps&logoColor=white)](#)
@@ -126,7 +127,7 @@ graph TD
 *Ecossistema autônomo de proteção e backup determinístico de máquinas virtuais e containers, desenhado para tolerar falhas de processo e manter integridade absoluta do catálogo de auditoria.*
 
 * **Hardening Transacional em SQLite:** Implementação do motor de dados sob `PRAGMA journal_mode=WAL` e `PRAGMA synchronous=FULL`, prevenindo lockings concorrentes e corrupção em cenários de corte abrupto de energia.
-* **Autonomia e Self-Healing:** Rotina de startup que identifica artefatos `.partial`, descarta os arquivos inconsistentes e reprocessa de forma idempotente apenas os jobs interrompidos, sem reexecutar o ciclo completo de backup.
+* **Autonomia e Self-Healing:** Rotina de startup que identifica artefatos `.partial`, descarta os arquivos inconsistentes e reprocessa de forma idempotente apenas os jobs interrompidos, sem reexecutar o ciclo completo.
 * **Observabilidade Desacoplada e Imutável:** Interface Datasette configurada com a diretiva `--immutable` apontando para snapshots somente-leitura, eliminando bloqueios contra o writer primário do sistema.
 * **Segurança de Borda em Loopback:** Painel administrativo isolado na interface local `127.0.0.1`, publicado por proxy reverso Nginx com autenticação e headers defensivos (`Content-Security-Policy`, `X-Frame-Options`, `X-Content-Type-Options`).
 * **Telemetria de SLOs:** Exportação de métricas para Prometheus e Grafana para acompanhamento em tempo real de RPO, tempos de execução e volume de dados.
