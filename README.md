@@ -259,7 +259,7 @@ flowchart LR
 ### 5. Hybrid Observability Platform & FinOps Architecture — Azure, Prometheus & Zero-Trust
 *Arquitetura de observabilidade híbrida para telemetria de alta densidade em nuvem (App Service Plans multitenant), mitigando custos de ingestão e otimizando volume de transferência de saída.*
 
-* **Estratégia FinOps & Otimização de Tráfego:** Eliminação de faturas exponenciais de ingestão/retenção no Azure Monitor / Log Analytics através de coleta desacoplada para armazenamento próprio. Tráfego encapsulado via túnel Zero-Trust (NetBird/WireGuard), neutralizando *egress fees* públicas e sobrecarga de agentes na nuvem.
+* **Estratégia FinOps & Otimização de Tráfego:** minimizando o tráfego de saída a coletas pontuais de métricas e evitando custos de agentes de terceiros na nuvem.
 * **Diagnóstico de Confiabilidade & Migração Arquitetural (Push vs. Pull):** Descontinuação de modelo frágil baseado em scripts Bash/Cron e InfluxDB (que gerava falsos positivos e métricas congeladas por `last()` em caso de falha de coleta). Migração para o padrão de mercado **Prometheus (Pull Pattern)**, garantindo detecção instantânea de alvos inoperantes (estado `DOWN`).
 * **Tratamento de Latência de API & Métricas Contínuas:** Resolução de retornos nulos causados pela janela de consolidação da Azure Monitor API (offset de 2 minutos). Implantação de coletor especializado em container via registro seguro (Quay.io) e autenticação não-humana (Service Principal RBAC com privilégio de `Reader`).
 * **Telemetria Centralizada & Consultas PromQL:** Integração de sondagem direta via endpoint `/probe/metrics/resource` no Prometheus Server on-premises, com consultas dinâmicas no Grafana refletindo a utilização real de CPU e memória sob alta carga.
@@ -300,7 +300,7 @@ flowchart LR
 
 * **Enclave de IA Soberana & Privacidade Absoluta:** Implantação e tuning de stack de inferência 100% local sobre arquitetura Apple Silicon (Ollama runtime). Orquestração de modelos para raciocínio profundo (*DeepSeek-R1*), engenharia de software/IaC (*Qwen2.5-Coder*) e frameworks especializados em análise de risco e auditoria ofensiva (*Red/Purple Teaming*).
 * **Interface Segura & Zero-Trust Mesh:** Contêiner isolado (*Open WebUI*) operando sob Docker Engine, com injeção de *System Prompts* defensivos e acesso externo restrito exclusivamente via malha mesh criptografada ponto a ponto (Tailscale / WireGuard), eliminando abertura de portas em borda de rede.
-* **Engenharia de Detecção Avançada (Wazuh & Sysmon):** Modelagem de regras de telemetria profunda correlacionadas à matriz **MITRE ATT&CK** e **NIST SP 800-61 / 800-82r3**. Ingestão e detecção de credenciais em memória (*LSASS / Mimikatz - T1003*), extração de diretório ativo (*NTDS.dit via ntdsutil*), movimentação lateral via *named pipes* (*PsExec*) e validação por simulação adversária (*Atomic Red Team*).
+* **Engenharia de Detecção Avançada (Wazuh & Sysmon):** Modelagem de regras de telemetria profunda correlacionadas à matriz **MITRE ATT&CK** e **NIST SP 800-61 / 800-82r3**. Ingestão e detecção de credenciais em memória (*LSASS / Mimikatz - T1003*), leitura indevida de memória em processos críticos (Sysmon Event ID 10 / ProcessAccess - T1003.001), extração de diretório ativo (*NTDS.dit via ntdsutil*), movimentação lateral via *named pipes* (*PsExec*) e validação por simulação adversária (*Atomic Red Team*).
 
 ```mermaid
 flowchart TD
@@ -326,16 +326,16 @@ flowchart TD
         Wazuh["Wazuh SIEM / Detection Rules"]
 
         Atomic -->|T1003 / Pass-the-Hash / Named Pipes| Sysmon
-        Sysmon -->|Event IDs 1, 17, 18, 4624| Wazuh
+        Sysmon -->|"Sysmon EID 1, 10, 17, 18 & Windows Security 4624"| Wazuh
     end
 ```
 
 ---
 
-### 7. Secure DevEx Architecture & Automated Regression Testing — Django & Playwright
+### 7. Dev-Only Synthetic Authentication & Automated E2E Testing Gate
 *Engenharia de aceleração de desenvolvimento (DevEx), isolamento de fluxos de autenticação em ambiente de testes e validação contínua ponta a ponta.*
 
-* **Middlewares de Segurança Condicional:** Implementação de camadas de controle no ciclo de vida de requisição HTTP (Django Middleware), permitindo bypass determinístico de autenticação exclusivamente sob flags explícitas de ambiente (`DEBUG=True` e variável de runtime dedicada), blindando deploys de produção contra falhas humanas.
+* Implementação de middleware condicional para injeção de sessão sintética em tempo de desenvolvimento. O componente possui trava arquitetural que aborta a inicialização caso DEBUG=False (lançando ImproperlyConfigured), garantindo que a rotina jamais seja instanciada ou exposta no ciclo de vida de produção.
 * **Isolamento de Estado & Redirecionamentos:** Tratamento contextual de rotas críticas (`/login`, `/dashboard`, `/logout`) com injeção de marcadores visuais no layout para identificação de sessões sintéticas e garantia de conformidade de acessos.
 * **Validação Ponta a Ponta Automatizada:** Suíte de testes unitários de regressão para assegurar a restauração automática do comportamento seguro com a flag desativada, complementada por inspeção visual e funcional automatizada em navegador headless (Playwright) gerando evidências de conformidade operacional.
 
@@ -448,6 +448,8 @@ flowchart LR
         WG_Client --> VSP
         VSP --> SCADA
     end
+```
+
 ### 11. Local LLMOps & Autonomous Cyber Assistant Platform — Unsloth, Ollama & pfSense
 *Engenharia de modelos locais de inteligência artificial, alinhamento supervisionado para operações Purple Team e integração de agentes autônomos de terminal sob restrições severas de computação.*
 
@@ -457,6 +459,44 @@ flowchart LR
 * **Análise Forense e Correlação de Tráfego de Borda:** Diagnóstico e triagem de telemetria de firewall (**pfSense**), identificando tentativas de bypass de DNS contidas por políticas *Default Deny*, rajadas STUN/TURN de WebRTC e isolamento de tráfego legítimo de túneis cifrados WireGuard.
 
 ---
+
+## 📜 Credenciais & Certificações Técnicas
+
+Formação continuada e qualificações profissionais estruturadas em defesa ativa, conformidade em infraestruturas críticas e segurança ofensiva.
+
+### 🏭 Segurança Industrial (OT/ICS) & Infraestruturas Críticas
+
+* Certificação Redes Industriais Seguras OT/ICS Associado — IBSEC (Instituto Brasileiro de Cibersegurança)
+* Redes Industriais Seguras OT/ICS na Prática — IBSEC
+* Introduction to CIP (Critical Infrastructure Protection) — OPSWAT Academy
+
+### ☁️ Cloud Security, Inteligência de Ameaças & Defesa
+
+* Segurança na Nuvem (Cloud Security) — IBSEC
+* Inteligência de Ameaças e Exposição — Axur
+* MITRE ATT&CK — Academia de Forense Digital (AFD)
+* EASM (External Attack Surface Management) com ThingsRecon — Academia de Forense Digital
+* Network Defense Essentials (NDE) — Acadi-TI
+* Segurança de Endpoint — Senac Goiás
+* Cyber Academy — Laboratório de Segurança Cibernética — FEBRABAN
+
+### 🔬 Forense Digital, Riscos & Governança de Dados
+
+* Perito Forense Digital — Academia de Forense Digital (AFD)
+* Gestão de Riscos Corporativos — Academia de Forense Digital (AFD)
+* Oracle MySQL — Administração Profissional — Academia de Forense Digital (AFD)
+* Privacy and Data Protection Essentials (PDPE) — EXIN / Instituto Daryus
+* Certificação Lean Seis Sigma White Belt — FM2S
+* Scrum Foundation Professional Certificate (SFPC™) — CertiProf
+
+### ⚔️ Segurança Ofensiva, Red Team & Hardware
+
+* Hacker Ético Associado — IBSEC
+* PRIME Red Team — Avançado & Intermediário — Acadi-TI
+* Hardware Hacking — Acadi-TI
+* Ataques Denial of Service (DoS) e Botnets — Solyd Offensive Security
+* Ataques em Redes Wi-Fi — Solyd Offensive Security
+* Pentest Profissional — A Nova Geração — Desec Security
 
 ---
 
