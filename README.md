@@ -205,6 +205,35 @@ flowchart LR
 
 ---
 
+### 4. Cloud Identity & CI/CD Platform Architecture — Azure & Keycloak
+*Engenharia de identidade corporativa, automação de esteiras CI/CD seguras e sustentação de microsserviços em produção no ecossistema Microsoft Azure.*
+
+* **Sustentação de Identidade & Contêineres:** Diagnóstico e resolução de falhas críticas de startup no **Azure Container Apps** hospedando o Keycloak. Mapeamento de regras de rede e firewall (`pg_hba.conf` / "Permitir serviços do Azure") no **Azure Database for PostgreSQL**, sincronização determinística de segredos em runtime (`KC_DB_PASSWORD`) e estabilização de revisões de contêiner.
+* **Refatoração de CI/CD com Least Privilege (GitHub Actions):** Pivotagem pragmática de runners locais instáveis para autenticação desacoplada via Service Principal corporativo (`az ad sp create-for-rbac`). Aplicação estrita de RBAC delimitada exclusivamente ao escopo do Resource Group de produção e injeção segura de credenciais via GitHub Secrets em esteiras separadas de backend e frontend.
+* **Administração de Identity Provider via Terminal (kcadm):** Mitigação de indisponibilidade da interface gráfica através de injeção direta de comandos no runtime do contêiner (`az containerapp exec`), governança de contexto de assinatura (`az account set`) e provisionamento automatizado de roles administrativas (`manage-users`) para Service Accounts de backend.
+
+```mermaid
+flowchart LR
+    Dev[Push / Pull Request] --> GH[GitHub Actions CI/CD]
+
+    subgraph Azure_Cloud ["Microsoft Azure (Resource Group de Produção)"]
+        SP[Service Principal / RBAC Restrito]
+        ACA[Azure Container Apps / Keycloak]
+        PG[(Azure Database for PostgreSQL)]
+
+        GH -->|Auth Segura via Secrets| SP
+        SP -->|Deploy Automatizado| ACA
+        ACA -->|pg_hba & KC_DB_PASSWORD| PG
+    end
+
+    subgraph CLI_Hardening ["Governança & Automação Terminal"]
+        CLI[Azure CLI / az containerapp exec] -->|kcadm.sh| ACA
+        CLI -.->|manage-users Role| BackendClient[Service Account Backend]
+    end
+```
+
+---
+
 ## 🎤 Liderança Técnica & Palestras
 
 * **Palestra: "FinOps: Quando seu Pipeline Deploya Dinheiro, Não Só Código"**  
