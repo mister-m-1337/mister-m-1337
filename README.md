@@ -234,6 +234,45 @@ flowchart LR
 
 ---
 
+### 5. Hybrid Observability Platform & FinOps Architecture — Azure, Prometheus & Zero-Trust
+*Arquitetura de observabilidade híbrida para telemetria de alta densidade em nuvem (App Service Plans multitenant), mitigando custos de ingestão e eliminando taxas de transferência (egress).*
+
+* **Estratégia FinOps & Otimização de Tráfego:** Eliminação de faturas exponenciais de ingestão/retenção no Azure Monitor / Log Analytics através de coleta desacoplada para armazenamento próprio. Tráfego encapsulado via túnel Zero-Trust (NetBird/WireGuard), neutralizando *egress fees* públicas e sobrecarga de agentes na nuvem.
+* **Diagnóstico de Confiabilidade & Migração Arquitetural (Push vs. Pull):** Descontinuação de modelo frágil baseado em scripts Bash/Cron e InfluxDB (que gerava falsos positivos e métricas congeladas por `last()` em caso de falha de coleta). Migração para o padrão de mercado **Prometheus (Pull Pattern)**, garantindo detecção instantânea de alvos inoperantes (estado `DOWN`).
+* **Tratamento de Latência de API & Métricas Contínuas:** Resolução de retornos nulos causados pela janela de consolidação da Azure Monitor API (offset de 2 minutos). Implantação de coletor especializado em container via registro seguro (Quay.io) e autenticação não-humana (Service Principal RBAC com privilégio de `Reader`).
+* **Telemetria Centralizada & Consultas PromQL:** Integração de sondagem direta via endpoint `/probe/metrics/resource` no Prometheus Server on-premises, com consultas dinâmicas no Grafana refletindo a utilização real de CPU e memória sob alta carga.
+
+```mermaid
+flowchart LR
+    subgraph Azure_Cloud ["Microsoft Azure (Produção)"]
+        ASP[App Service Plan / 60+ Apps]
+        API[Azure Monitor Metrics API]
+        VM_Proxy["Proxy VM (Ubuntu ARM64)"]
+        Exporter["Azure Metrics Exporter (Quay.io)"]
+        SP[Service Principal / Reader RBAC]
+
+        ASP -->|Métricas Brutas| API
+        SP -->|Auth Headless| API
+        API -->|Scrape de Métricas| Exporter
+        Exporter -.->|Container Runtime| VM_Proxy
+    end
+
+    subgraph Overlay_Security ["Malha Cifrada Zero-Trust"]
+        Tunnel["NetBird / WireGuard Encrypted Mesh"]
+    end
+
+    subgraph Core_Infra ["Data Center On-Premises"]
+        Prometheus["Prometheus Server (Pull Mode / 1m)"]
+        Grafana["Grafana Dashboards (PromQL)"]
+
+        VM_Proxy --- Tunnel
+        Tunnel --- Prometheus
+        Prometheus --> Grafana
+    end
+```
+
+---
+
 ## 🎤 Liderança Técnica & Palestras
 
 * **Palestra: "FinOps: Quando seu Pipeline Deploya Dinheiro, Não Só Código"**  
