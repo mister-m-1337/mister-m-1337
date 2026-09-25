@@ -339,6 +339,16 @@ flowchart TD
 * **Isolamento de Estado & Redirecionamentos:** Tratamento contextual de rotas críticas (`/login`, `/dashboard`, `/logout`) com injeção de marcadores visuais no layout para identificação de sessões sintéticas e garantia de conformidade de acessos.
 * **Validação Ponta a Ponta Automatizada:** Suíte de testes unitários de regressão para assegurar a restauração automática do comportamento seguro com a flag desativada, complementada por inspeção visual e funcional automatizada em navegador headless (Playwright) gerando evidências de conformidade operacional.
 
+### 8. Local LLMOps & Autonomous Cyber Assistant Platform — Unsloth, Ollama & pfSense
+*Engenharia de modelos locais de inteligência artificial, alinhamento supervisionado para operações Purple Team e integração de agentes autônomos de terminal sob restrições severas de computação.*
+
+* **Alinhamento e Quantização sob Limite de VRAM:** Otimização de pipelines de fine-tuning com **Unsloth** em GPU de consumo restrito (6 GB VRAM), realizando quantização 4-bit (`Q4_K_M`) e governança de contexto (`num_ctx: 4096`). Padronização de saídas no formato **ChatML** com enforcement de matriz quadrivalente determinística (*Análise, Exploração Red Team, Detecção Blue Team e Mitigação*).
+* **Pipelines Autônomos de Ingestão & RAG Estruturado:** Construção de rotinas em Python para extração automatizada de manuais técnicos e telemetria de sistemas, convertendo dados não estruturados em pares de treinamento enriquecidos com foco em automação shell avançada e análise forense de processos.
+* **Agente Autônomo de Código & Infraestrutura (Aider CLI + Ollama API):** Implantação de ambiente Codex local integrado ao servidor Ollama via interface compatível com OpenAI, orquestrando inspeções ativas de segurança de rede (`ss`, análise de portas de borda) e edição segura orientada a diffs rastreáveis de Git.
+* **Análise Forense e Correlação de Tráfego de Borda:** Diagnóstico e triagem de telemetria de firewall (**pfSense**), identificando tentativas de bypass de DNS contidas por políticas *Default Deny*, rajadas STUN/TURN de WebRTC e isolamento de tráfego legítimo de túneis cifrados WireGuard.
+
+---
+
 ---
 
 ## 🎤 Liderança Técnica & Palestras
