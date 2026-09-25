@@ -16,11 +16,23 @@
 
 ## 🏛️ Visão Arquitetural
 
-Atuo na interseção entre **infraestrutura de baixo nível, resiliência industrial regulada e engenharia de nuvem moderna**. Minha base técnica provém do bare-metal e data centers — comutação L1/L2, roteamento, virtualização e storage — estendendo-se a ambientes OT/ICS governados por **ISA/IEC 62443**, segmentação pelo **Purdue Model** e validação de sistemas computadorizados sob diretrizes **GAMP 5**.
+> **"Protejo o que não pode parar."**  
+> *Linhas de produção farmacêutica, saneamento básico e plantas industriais: ambientes onde indisponibilidade ou violação de integridade não geram apenas perdas financeiras, mas impacto operacional severo e risco físico real.*
 
-Sobre essa fundação de alta confiabilidade, construo plataformas declarativas com **Terraform / OpenTofu**, orquestração de microsserviços com **Kubernetes** e esteiras CI/CD seguras orientadas a **Shift-Left Security**, garantindo que controles de segurança e governança sejam declarativos e testados no código.
+Atuo na convergência entre **Cibersegurança Industrial (OT/ICS), Engenharia de Infraestrutura/DevSecOps e Validação de Sistemas Computadorizados (CSV/GxP)**. Minha carreira é dedicada à blindagem, resiliência e conformidade de ecossistemas de missão crítica — desde a sustentação e auditoria em ambientes farmacêuticos industriais contínuos até a liderança tática de operações de SOC multicliente de alta complexidade.
 
-> *Um sistema só é confiável quando seu comportamento sob falha é previsível.*
+Sobre a base determinística do chão de fábrica e data centers, integro arquiteturas modernas de nuvem (AWS/Azure), infraestrutura declarativa (Terraform/OpenTofu) e esteiras CI/CD seguras (Shift-Left), tornando segurança e conformidade atributos verificáveis no código.
+
+---
+
+### Eixos Estratégicos de Especialidade
+
+* **Segurança OT/ICS & SCADA:** Arquitetura de segmentação e zonas/conduítes orientada por **ISA/IEC 62443**, NIST CSF e Purdue Model. Hardening de camadas de controle e PLCs, análise de integridade em protocolos industriais (Modbus, DNP3) e eliminação de superfícies de ataque em linhas de produção.
+* **Validação Farmacêutica (CSV / GxP):** Ciclo completo de qualificação de infraestruturas e validação de sistemas computadorizados (QI, QO, QP) em estrita conformidade com **ANVISA (RDC 658/301), GAMP 5 e FDA 21 CFR Part 11**, conectando garantia da qualidade, engenharia e TI.
+* **DevSecOps & Resiliência em Nuvem:** Implementação de controles nativos em esteiras de entrega contínua (SAST, SCA, Secret Scanning), governança de identidades e automação de infraestrutura imutável (IaC via Terraform/Ansible) em ambientes híbridos e multi-cloud.
+* **Operações de SOC & Resposta a Incidentes:** Operação e governança de centros de defesa cibernética 24/7, mapeamento e correlação de ameaças via **MITRE ATT&CK**, redução contínua de MTTD/MTTR e reporte executivo com foco em risco de negócio.
+
+---
 
 | Princípio | Aplicação Prática |
 | :--- | :--- |
@@ -29,6 +41,16 @@ Sobre essa fundação de alta confiabilidade, construo plataformas declarativas 
 | **Observabilidade Aplicada** | Métricas, telemetria de logs e trilhas de auditoria desacoplados do plano de escrita. A infraestrutura de observabilidade sobrevive à eventual falha do sistema que monitora. |
 | **Tolerância a Falhas** | Durabilidade transacional explícita, rotinas de *self-healing* idempotentes e runbooks determinísticos de recuperação contra desastres. |
 | **Governança & Risco** | Conformidade tratada como requisito de código (ISA/IEC 62443, GAMP 5, MITRE ATT&CK), com evidências e testes gerados pela própria esteira automatizada. |
+
+---
+
+### 🎯 Atuação & Posicionamento Profissional
+
+Aberto a desafios técnicos e estratégicos em posições de **Arquiteto de Soluções / Infraestrutura, Especialista Sênior em DevSecOps / Cloud Security ou Liderança Técnica de Segurança** em organizações que operam infraestruturas críticas, plataformas digitais de alta escala ou manufatura regulada.
+
+* **Modalidades:** Prestação de Serviços (PJ) ou Posições Corporativas Estratégicas (CLT).
+* **Regime:** 100% Remoto ou Híbrido.
+* **Contato Direto:** Mensagem direta via LinkedIn ou pelos canais informados no cabeçalho.
 
 ---
 
