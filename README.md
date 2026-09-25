@@ -369,7 +369,45 @@ flowchart LR
 
 ---
 
-### 9. Local LLMOps & Autonomous Cyber Assistant Platform — Unsloth, Ollama & pfSense
+### 9. Sovereign Bare-Metal Datacenter & Zero-Trust Mesh Architecture — Proxmox, ZFS & Nebula
+*Concepção e governança de infraestrutura física dedicada (self-hosted), virtualização de alta densidade, resiliência de storage em nível de bloco e interconexão de serviços em malha privada criptografada.*
+
+* **Camada de Computação & Armazenamento Transacional (ZFS RAID-Z):** Orquestração de hypervisor bare-metal (Proxmox VE) combinando virtualização KVM com contêineres de baixo overhead (LXC). Persistência de volumes de produção estruturada sobre pools ZFS com snapshots atômicos contínuos, replicação assíncrona e mitigação nativa de silent data corruption (*bit rot*).
+* **Segmentação Física & Malha Overlay Zero-Trust (Nebula / NetBird):** Segregação estrita de tráfego L2/L3 com roteamento gerenciado (MikroTik), isolando barramentos de gestão fora-de-banda (iDRAC), zonas de produção e redes periféricas. Interconexão de microserviços e nós remotos via malha mesh overlay peer-to-peer criptografada (Nebula), sem abertura de portas desnecessárias em borda de WAN.
+* **Governança e Hardening de Stacks de Contêineres:** Adaptação e blindagem de receitas de orquestração Docker para conformidade corporativa. Implementação de autenticação centralizada (Authelia / SSO com mTLS), proxy reverso com mitigação de ameaças de camada 7 (CrowdSec / Traefik) e integração com esteiras de automação operacional orientadas a eventos (n8n e Python).
+
+```mermaid
+flowchart TD
+    subgraph Edge_Routing ["Borda & Roteamento L2/L3 (MikroTik)"]
+        WAN[Link WAN Corporativo]
+        VLAN_MGMT[VLAN Gestão / iDRAC OOB]
+        VLAN_PROD[VLAN Produção / DMZ]
+        WAN --> VLAN_PROD
+        WAN -.->|Acesso Restrito| VLAN_MGMT
+    end
+
+    subgraph Bare_Metal ["Datacenter Bare-Metal (Proxmox VE)"]
+        ZFS[(Pool ZFS RAID-Z / Snapshots)]
+        LXC[Microserviços LXC / KVM]
+        Docker_Engine[Docker Engine Hardened]
+
+        VLAN_PROD --> LXC & Docker_Engine
+        Docker_Engine -->|Volumes Persistentes| ZFS
+    end
+
+    subgraph Overlay_Mesh ["Malha Mesh Zero-Trust (Nebula / NetBird)"]
+        Tunnel["Overlay Criptografado P2P (Sem Port-Forwarding)"]
+        Auth["Controle de Acesso Centralizado (Authelia / mTLS)"]
+        SecOps["Defesa de Aplicação L7 (CrowdSec / WAF)"]
+
+        LXC & Docker_Engine --- Tunnel
+        Tunnel --- Auth --> SecOps
+    end
+```
+
+---
+
+### 10. Local LLMOps & Autonomous Cyber Assistant Platform — Unsloth, Ollama & pfSense
 *Engenharia de modelos locais de inteligência artificial, alinhamento supervisionado para operações Purple Team e integração de agentes autônomos de terminal sob restrições severas de computação.*
 
 * **Alinhamento e Quantização sob Limite de VRAM:** Otimização de pipelines de fine-tuning com **Unsloth** em GPU de consumo restrito (6 GB VRAM), realizando quantização 4-bit (`Q4_K_M`) e governança de contexto (`num_ctx: 4096`). Padronização de saídas no formato **ChatML** com enforcement de matriz quadrivalente determinística (*Análise, Exploração Red Team, Detecção Blue Team e Mitigação*).
