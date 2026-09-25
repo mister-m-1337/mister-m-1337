@@ -339,7 +339,37 @@ flowchart TD
 * **Isolamento de Estado & Redirecionamentos:** Tratamento contextual de rotas críticas (`/login`, `/dashboard`, `/logout`) com injeção de marcadores visuais no layout para identificação de sessões sintéticas e garantia de conformidade de acessos.
 * **Validação Ponta a Ponta Automatizada:** Suíte de testes unitários de regressão para assegurar a restauração automática do comportamento seguro com a flag desativada, complementada por inspeção visual e funcional automatizada em navegador headless (Playwright) gerando evidências de conformidade operacional.
 
-### 8. Local LLMOps & Autonomous Cyber Assistant Platform — Unsloth, Ollama & pfSense
+### 8. Forensic Data Engineering & Clinical Migration Pipeline — Firebird SQL, LGPD & Canonical ETL
+*Engenharia de resgate de dados, extração forense determinística e modelagem canônica de dados médicos sensíveis em ambiente regulado sob isolamento estrito.*
+
+* **Preservação e Extração Imutável (Firebird SQL):** Recuperação e congelamento de base de dados relacional legada de prontuário eletrônico. Extração estruturada de 41 tabelas com validação estrita de 215.589 registros com zero divergência de dados, conversão segura de charset (ISO-8859-1 para UTF-8) e preservação integral de campos BLOB clínicos textuais sem corrupção de encodings.
+* **Governança de Dados Médicos & LGPD:** Classificação automatizada de sensibilidade por coluna (HEALTH_DATA, SENSITIVE_PERSONAL, PUBLIC) e anonimização/mascaramento de dados cadastrais e identificadores em relatórios e amostras técnicas. Processamento 100% local (air-gapped/on-premises), blindando o pipeline contra vazamento para provedores de nuvem ou APIs externas.
+* **Engenharia Reversa & Camada Canônica Intermediária:** Mapeamento não-destrutivo de integridade referencial (PKs, FKs declaradas e inferidas, análise de orfandade), identificação de anomalias cadastrais e geração de dicionário funcional de dados. Estruturação de modelo canônico desacoplado e template de mapeamento DE/PARA para integração determinística com novo software de destino.
+
+```mermaid
+flowchart LR
+    subgraph Custodia ["Cadeia de Custódia & Banco Legado"]
+        DB_Origem[(Base de Produção)] -->|Backup Lógico .fbk| DB_Homolog[(Base Isolada Homologação)]
+        DB_Homolog -->|Validação de Integridade| Export[Extrator Python / Firebird Engine]
+    end
+
+    subgraph ETL_Local ["Pipeline Canônico & Governança LGPD"]
+        Export -->|215.589 Registros / 41 Tabelas| CSVs[CSVs Imutáveis UTF-8]
+        CSVs --> Dicionario[Dicionário Funcional & Schema]
+        CSVs --> LGPD[Classificação de Sensibilidade & Mascaramento]
+        CSVs --> Auditoria[Auditoria de Integridade Referencial]
+    end
+
+    subgraph Camada_Destino ["Interoperabilidade & Integração"]
+        Dicionario & LGPD & Auditoria --> Canonico[Modelo Canônico Clínico]
+        Canonico --> DE_PARA[Template de Mapeamento DE/PARA]
+        DE_PARA -.->|Aguardando Layout| Novo_Sistema[Novo Sistema de Destino]
+    end
+```
+
+---
+
+### 9. Local LLMOps & Autonomous Cyber Assistant Platform — Unsloth, Ollama & pfSense
 *Engenharia de modelos locais de inteligência artificial, alinhamento supervisionado para operações Purple Team e integração de agentes autônomos de terminal sob restrições severas de computação.*
 
 * **Alinhamento e Quantização sob Limite de VRAM:** Otimização de pipelines de fine-tuning com **Unsloth** em GPU de consumo restrito (6 GB VRAM), realizando quantização 4-bit (`Q4_K_M`) e governança de contexto (`num_ctx: 4096`). Padronização de saídas no formato **ChatML** com enforcement de matriz quadrivalente determinística (*Análise, Exploração Red Team, Detecção Blue Team e Mitigação*).
