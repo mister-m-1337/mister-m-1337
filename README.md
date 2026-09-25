@@ -295,6 +295,52 @@ flowchart LR
 
 ---
 
+### 6. Sovereign Local AI Enclave & Adversary Emulation — Apple Silicon, Wazuh & MITRE ATT&CK
+*Arquitetura de inteligência artificial soberana para segurança ofensiva/defensiva, orquestração local de LLMs e engenharia de detecção comportamental orientada a matrizes de ameaças.*
+
+* **Enclave de IA Soberana & Privacidade Absoluta:** Implantação e tuning de stack de inferência 100% local sobre arquitetura Apple Silicon (Ollama runtime). Orquestração de modelos para raciocínio profundo (*DeepSeek-R1*), engenharia de software/IaC (*Qwen2.5-Coder*) e frameworks especializados em análise de risco e auditoria ofensiva (*Red/Purple Teaming*).
+* **Interface Segura & Zero-Trust Mesh:** Contêiner isolado (*Open WebUI*) operando sob Docker Engine, com injeção de *System Prompts* defensivos e acesso externo restrito exclusivamente via malha mesh criptografada ponto a ponto (Tailscale / WireGuard), eliminando abertura de portas em borda de rede.
+* **Engenharia de Detecção Avançada (Wazuh & Sysmon):** Modelagem de regras de telemetria profunda correlacionadas à matriz **MITRE ATT&CK** e **NIST SP 800-61 / 800-82r3**. Ingestão e detecção de credenciais em memória (*LSASS / Mimikatz - T1003*), extração de diretório ativo (*NTDS.dit via ntdsutil*), movimentação lateral via *named pipes* (*PsExec*) e validação por simulação adversária (*Atomic Red Team*).
+
+```mermaid
+flowchart TD
+    subgraph Client_Access ["Acesso Remoto Seguro (Mesh Cifrada)"]
+        Operator["Estação Remota Autorizada"]
+        Tailscale["Tailscale / WireGuard Mesh VPN"]
+        Operator --- Tailscale
+    end
+
+    subgraph Local_Enclave ["Sovereign AI Enclave (macOS Bare-Metal)"]
+        WebUI["Open WebUI (Docker Container)"]
+        Ollama["Ollama Runtime (Apple Silicon)"]
+        Models["Modelos: DeepSeek-R1 · Qwen-Coder · Llama"]
+
+        Tailscale -->|Sem Port-Forwarding| WebUI
+        WebUI -->|host.docker.internal| Ollama
+        Ollama --- Models
+    end
+
+    subgraph Detection_Engine ["Telemetria & Detecção de Ameaças (Purple Team)"]
+        Atomic["Atomic Red Team (Emulação Adversária)"]
+        Sysmon["Agentes Sysmon / PowerShell OpLogs"]
+        Wazuh["Wazuh SIEM / Detection Rules"]
+
+        Atomic -->|T1003 / Pass-the-Hash / Named Pipes| Sysmon
+        Sysmon -->|Event IDs 1, 17, 18, 4624| Wazuh
+    end
+```
+
+---
+
+### 7. Secure DevEx Architecture & Automated Regression Testing — Django & Playwright
+*Engenharia de aceleração de desenvolvimento (DevEx), isolamento de fluxos de autenticação em ambiente de testes e validação contínua ponta a ponta.*
+
+* **Middlewares de Segurança Condicional:** Implementação de camadas de controle no ciclo de vida de requisição HTTP (Django Middleware), permitindo bypass determinístico de autenticação exclusivamente sob flags explícitas de ambiente (`DEBUG=True` e variável de runtime dedicada), blindando deploys de produção contra falhas humanas.
+* **Isolamento de Estado & Redirecionamentos:** Tratamento contextual de rotas críticas (`/login`, `/dashboard`, `/logout`) com injeção de marcadores visuais no layout para identificação de sessões sintéticas e garantia de conformidade de acessos.
+* **Validação Ponta a Ponta Automatizada:** Suíte de testes unitários de regressão para assegurar a restauração automática do comportamento seguro com a flag desativada, complementada por inspeção visual e funcional automatizada em navegador headless (Playwright) gerando evidências de conformidade operacional.
+
+---
+
 ## 🎤 Liderança Técnica & Palestras
 
 * **Palestra: "FinOps: Quando seu Pipeline Deploya Dinheiro, Não Só Código"**  
