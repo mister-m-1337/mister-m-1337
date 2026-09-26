@@ -7,7 +7,7 @@
 
 [![GitHub](https://img.shields.io/badge/GitHub-mister--m--1337-24292e?style=for-the-badge&logo=github&logoColor=white)](https://github.com/mister-m-1337)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/michael-mendes-ot-security)
-[![Email](https://img.shields.io/badge/Email-michaelmmendonca%40gmail.com-24292e?style=for-the-badge&logo=maildotru&logoColor=white)](mailto:)
+[![Email](https://img.shields.io/badge/Email-)](mailto:)
 [![Localização](https://img.shields.io/badge/Localiza%C3%A7%C3%A3o-An%C3%A1polis%2FGO%20%C2%B7%20Remoto%20Global-24292e?style=for-the-badge&logo=googlemaps&logoColor=white)](#)
 
 </div>
