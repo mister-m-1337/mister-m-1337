@@ -1,6 +1,6 @@
 <div align="center">
 
-# Michael Mendes Mendonça
+# Michael
 ### Infrastructure Architect · Senior DevSecOps & Cloud Security · Critical Systems Resilience
 
 *Engenharia de infraestrutura, automação de esteiras seguras e garantia de disponibilidade determinística para ambientes de missão crítica.*
